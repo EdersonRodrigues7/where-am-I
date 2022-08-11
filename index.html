@@ -4,14 +4,38 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="https://icon-library.com/images/world-icon-png/world-icon-png-4.jpg"
+    />
     <link rel="stylesheet" type="text/css" href="./style.css" />
     <title>Where am I?</title>
   </head>
   <body>
+    <header>
+      <img src="https://icon-library.com/images/world-icon-png/world-icon-png-4.jpg" alt="" />
+      <h1 class="brand">GeoApp</h1>
+    </header>
+    <div class="intro">
+      <h3>Discover some amazing infos about your country!</h3>
+      <p>
+        Search by country name or get directly from your current location by clicking the "Where am
+        I?" button
+      </p>
+    </div>
+    <div class="btn-wrapper">
+      <button class="btn-country">Where am I?</button>
+      <p>or</p>
+      <label for="">Choose one country</label>
+      <input type="text" />
+      <button>Find</button>
+    </div>
     <main class="container">
       <p class="msg"></p>
       <div class="countries"></div>
-      <button class="btn-country">Where am I?</button>
+      <div class="neighbours"></div>
     </main>
     <!-- <script type="module" src="./script.js"></script> -->
     <script type="module" src="./script-async.js"></script>

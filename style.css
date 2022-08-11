@@ -5,36 +5,79 @@
 }
 
 html {
-  font-size: 62.5%;
   box-sizing: border-box;
 }
 
 body {
   font-family: system-ui;
-  color: #555;
-  background-color: #f7f7f7;
+  color: #f7f7f7;
+  background-color: #373e47;
   min-height: 100vh;
+}
 
+header {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 2rem;
+  background-color: rgb(245, 112, 3);
+  min-height: 10vh;
+}
+
+header img {
+  width: 50px;
+}
+
+header span.brand {
+  font-size: 2rem;
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  text-align: center;
 }
 
 .container {
   display: flex;
   flex-flow: column;
   align-items: center;
+  max-width: 100vw;
 }
 
 .msg {
   font-size: 32px;
 }
 
-.countries {
-  margin: 8rem 0;
+div.btn-wrapper {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
 
+.btn-country {
+  border: none;
   font-size: 2rem;
+  margin: 0;
+  padding: 1rem 2rem;
+  border-radius: 0.7rem;
+  color: white;
+  background-color: orangered;
+  cursor: pointer;
+}
+
+.countries {
+  margin: 5rem 0;
+  display: flex;
+  flex-flow: column;
+  gap: 4rem;
+  max-width: 100%;
+  font-size: 1.5rem;
   opacity: 0;
   transition: opacity 1s;
 }
@@ -42,43 +85,37 @@ body {
 .country {
   position: relative;
   background-color: #fff;
+  color: #373e47;
   box-shadow: 0 2rem 5rem 1rem rgba(0, 0, 0, 0.1);
-  font-size: 1.8rem;
-  width: 30rem;
+  font-size: 1.2rem;
   border-radius: 0.7rem;
-  margin: 0 3rem;
-  /* overflow: hidden; */
+  margin: 0 1rem;
 }
 
 .country::before {
   content: 'Current country';
   position: absolute;
-  top: -4rem;
-  font-size: 1.8rem;
+  top: -2rem;
+  font-size: 1rem;
   font-weight: 600;
-  text-transform: uppercase;
-  color: #888;
-}
-
-.neighbour::before {
-  content: 'Neighbour country';
   width: 100%;
-  position: absolute;
-  top: -4rem;
   text-align: center;
-  font-size: 1.8rem;
-  font-weight: 600;
   text-transform: uppercase;
   color: #888;
 }
 
-.neighbour {
-  transform: scale(0.8) translateY(1rem);
-  margin-left: 0;
+article.neighbour::before {
+  content: 'Neighbour country' !important;
+  position: absolute;
+  top: -2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #888;
 }
 
 .country__img {
-  width: 30rem;
+  max-width: 100%;
   height: 17rem;
   object-fit: cover;
   background-color: #eee;
@@ -87,12 +124,18 @@ body {
 }
 
 .country__data {
+  display: grid;
   padding: 2.5rem 3.75rem 3rem 3.75rem;
 }
 
+.country__data * {
+  display: inline-flex;
+}
+
 .country__name {
-  font-size: 2.7rem;
+  font-size: 2.3rem;
   margin-bottom: 0.7rem;
+  overflow: hidden;
 }
 
 .country__region {
@@ -112,16 +155,6 @@ body {
   font-size: 2.4rem;
 }
 
-.btn-country {
-  border: none;
-  font-size: 2rem;
-  padding: 2rem 5rem;
-  border-radius: 0.7rem;
-  color: white;
-  background-color: orangered;
-  cursor: pointer;
-}
-
 .images {
   display: flex;
 }
@@ -137,4 +170,27 @@ body {
   margin: 2rem;
   border: 3rem solid white;
   box-shadow: 0 2rem 5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.neighbours {
+  margin: 1rem 0;
+  display: flex;
+  flex-flow: column;
+  gap: 3rem;
+  max-width: 100%;
+  font-size: 1.5rem;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+@media (min-width: 768px) {
+  .countries {
+    display: flex;
+    flex-flow: row;
+    max-width: 80%;
+  }
+  .neighbour {
+    transform: scale(0.8) translateY(1rem);
+    margin-left: 0;
+  }
 }

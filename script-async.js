@@ -1,12 +1,16 @@
 'use strict';
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
+const neighboursContainer = document.querySelector('.neighbours');
 const msg = document.querySelector('.msg');
 const restCountriesUrl = 'https://restcountries.com/v2/alpha/';
 
-const renderCountry = function (data, className = '') {
+const renderCountry = function (data, city) {
+  if (city) {
+    msg.innerHTML = `You're in ${city}, ${data.name}`;
+  }
   const html = `
-  <article class="country ${className}">
+  <article class="country">
     <img class="country__img" src="${data.flag}" />
     <div class="country__data">
       <h3 class="country__name">${data.name}</h3>
@@ -21,6 +25,23 @@ const renderCountry = function (data, className = '') {
   countriesContainer.style.opacity = 1;
 };
 
+const renderNeighbour = function (data) {
+  const html = `
+  <article class="country neighbour">
+    <img class="country__img" src="${data.flag}" />
+    <div class="country__data">
+      <h3 class="country__name">${data.name}</h3>
+      <h4 class="country__region">${data.region}</h4>
+      <p class="country__row"><span>👫</span>${(+data.population / 1000000).toFixed(1)} M people</p>
+      <p class="country__row"><span>🗣️</span>${data.languages[0].name}</p>
+      <p class="country__row"><span>💰</span>${data.currencies[0].name}</p>
+    </div>
+  </article>
+  `;
+  neighboursContainer.insertAdjacentHTML('beforeend', html);
+  neighboursContainer.style.opacity = 1;
+};
+
 const renderError = function (msg) {
   countriesContainer.insertAdjacentText('beforeend', msg);
   countriesContainer.style.opacity = 1;
@@ -29,24 +50,37 @@ const renderError = function (msg) {
 const getCountryJSON = async (url, errorMsg) => {
   try {
     const response = await fetch(url);
+    if (response.status === 404) throw new Error(errorMsg);
     return response.json();
   } catch (err) {
-    throw new Error(`${errorMsg} (${response.status})`);
+    renderError(errorMsg);
+    // throw new Error(`${errorMsg} (${response.status})`);
   }
 };
 
-const getCountryData = async code => {
+const getCountryData = async (code, city) => {
   try {
     const countryData = await getCountryJSON(`${restCountriesUrl}${code}`, 'Country not found 😔');
-    renderCountry(countryData);
-    const neighbourCode = countryData.borders?.[0].toLowerCase();
-    const neighbourData = await getCountryJSON(
-      `${restCountriesUrl}${neighbourCode}`,
-      'Country not found 😔'
-    );
-    renderCountry(neighbourData);
+    console.log(countryData);
+    renderCountry(countryData, city);
+    if (countryData.borders) {
+      for (const neighbour of countryData.borders) {
+        const neighbourData = await getCountryJSON(
+          `${restCountriesUrl}${neighbour.toLowerCase()}`,
+          'Country not found 😔'
+        );
+        renderNeighbour(neighbourData);
+      }
+    }
+
+    // const neighbourCode = countryData.borders?.[0].toLowerCase();
+    // const neighbourData = await getCountryJSON(
+    //   `${restCountriesUrl}${neighbourCode}`,
+    //   'Country not found 😔'
+    // );
+    // renderCountry(neighbourData);
   } catch (err) {
-    renderError(err.message);
+    // renderError(err.message);
   }
 };
 
@@ -64,8 +98,8 @@ const whereAmI = async function () {
   );
   const location = await data.json();
   const countryCode = location.prov.toLowerCase();
-  msg.innerHTML = `You're in ${location.city}, ${location.country}`;
-  getCountryData(countryCode);
+  // getCountryData(countryCode, location.city);
+  getCountryData('eg', ['cairo']);
 };
 
 btn.addEventListener('click', function () {

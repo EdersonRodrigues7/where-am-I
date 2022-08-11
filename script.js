@@ -61,7 +61,9 @@ const whereAmI = function () {
   getPosition()
     .then(pos => {
       const { latitude, longitude } = pos.coords;
-      return fetch(`https://geocode.xyz/${latitude},${longitude}?geoit=json&auth=${GEOCODE_KEY}`);
+      return fetch(
+        `https://geocode.xyz/${latitude},${longitude}?geoit=json&auth=562264285309734464978x16885`
+      );
     })
     .then(response => {
       if (response.status === '403') throw new Error('Too many requests!');
