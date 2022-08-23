@@ -104,8 +104,8 @@ div.btn-wrapper {
   color: #888;
 }
 
-article.neighbour::before {
-  content: 'Neighbour country' !important;
+article.neighbor::before {
+  content: 'Neighbor country' !important;
   position: absolute;
   top: -2rem;
   font-size: 1rem;
@@ -172,7 +172,7 @@ article.neighbour::before {
   box-shadow: 0 2rem 5rem 1rem rgba(0, 0, 0, 0.1);
 }
 
-.neighbours {
+.neighbors {
   margin: 1rem 0;
   display: flex;
   flex-flow: column;
@@ -189,7 +189,7 @@ article.neighbour::before {
     flex-flow: row;
     max-width: 80%;
   }
-  .neighbour {
+  .neighbor {
     transform: scale(0.8) translateY(1rem);
     margin-left: 0;
   }

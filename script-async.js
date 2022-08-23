@@ -1,7 +1,7 @@
 'use strict';
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
-const neighboursContainer = document.querySelector('.neighbours');
+const neighborsContainer = document.querySelector('.neighbors');
 const msg = document.querySelector('.msg');
 const restCountriesUrl = 'https://restcountries.com/v2/alpha/';
 
@@ -25,9 +25,9 @@ const renderCountry = function (data, city) {
   countriesContainer.style.opacity = 1;
 };
 
-const renderNeighbour = function (data) {
+const renderNeighbor = function (data) {
   const html = `
-  <article class="country neighbour">
+  <article class="country neighbor">
     <img class="country__img" src="${data.flag}" />
     <div class="country__data">
       <h3 class="country__name">${data.name}</h3>
@@ -38,8 +38,8 @@ const renderNeighbour = function (data) {
     </div>
   </article>
   `;
-  neighboursContainer.insertAdjacentHTML('beforeend', html);
-  neighboursContainer.style.opacity = 1;
+  neighborsContainer.insertAdjacentHTML('beforeend', html);
+  neighborsContainer.style.opacity = 1;
 };
 
 const renderError = function (msg) {
@@ -54,7 +54,6 @@ const getCountryJSON = async (url, errorMsg) => {
     return response.json();
   } catch (err) {
     renderError(errorMsg);
-    // throw new Error(`${errorMsg} (${response.status})`);
   }
 };
 
@@ -64,21 +63,14 @@ const getCountryData = async (code, city) => {
     console.log(countryData);
     renderCountry(countryData, city);
     if (countryData.borders) {
-      for (const neighbour of countryData.borders) {
-        const neighbourData = await getCountryJSON(
-          `${restCountriesUrl}${neighbour.toLowerCase()}`,
+      for (const neighbor of countryData.borders) {
+        const neighborData = await getCountryJSON(
+          `${restCountriesUrl}${neighbor.toLowerCase()}`,
           'Country not found 😔'
         );
-        renderNeighbour(neighbourData);
+        renderNeighbor(neighborData);
       }
     }
-
-    // const neighbourCode = countryData.borders?.[0].toLowerCase();
-    // const neighbourData = await getCountryJSON(
-    //   `${restCountriesUrl}${neighbourCode}`,
-    //   'Country not found 😔'
-    // );
-    // renderCountry(neighbourData);
   } catch (err) {
     // renderError(err.message);
   }
@@ -98,8 +90,7 @@ const whereAmI = async function () {
   );
   const location = await data.json();
   const countryCode = location.prov.toLowerCase();
-  // getCountryData(countryCode, location.city);
-  getCountryData('eg', ['cairo']);
+  getCountryData(countryCode, location.city);
 };
 
 btn.addEventListener('click', function () {
